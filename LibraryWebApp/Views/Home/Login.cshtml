@@ -1,0 +1,38 @@
+﻿@model UserModel
+@{
+    ViewBag.Title = "Sign In";
+}
+
+<div>
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        <div class="row pt-3">
+            <div class="col-sm-3">
+                <div class="card ">
+                    <div class="card-header">
+                        <h4><strong>Sign In</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                @Html.LabelFor(m => m.Username)
+                                @Html.TextBoxFor(m=>m.Username,new {@Placeholder = "Enter Username",@class="form-control"})
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                @Html.LabelFor(m => m.Password)
+                                @Html.TextBoxFor(m=>m.Password,new {@Placeholder = "Enter Password",@class="form-control",@type="password"})
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button>Submit</button>
+    }
+   
+</div>

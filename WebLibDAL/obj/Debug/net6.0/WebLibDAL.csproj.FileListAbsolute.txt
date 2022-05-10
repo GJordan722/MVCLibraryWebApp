@@ -1,0 +1,16 @@
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\bin\Debug\net6.0\WebLibDAL.deps.json
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\bin\Debug\net6.0\WebLibDAL.dll
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\bin\Debug\net6.0\WebLibDAL.pdb
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.csproj.AssemblyReference.cache
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.AssemblyInfoInputs.cache
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.AssemblyInfo.cs
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.csproj.CoreCompileInputs.cache
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.dll
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\refint\WebLibDAL.dll
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.pdb
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\ref\WebLibDAL.dll
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\bin\Debug\net6.0\WebLibDAL.dll.config
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\bin\Debug\net6.0\WebLibCommon.dll
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\bin\Debug\net6.0\WebLibCommon.pdb
+C:\Users\carbo\source\repos\LibraryWebApp\WebLibDAL\obj\Debug\net6.0\WebLibDAL.csproj.CopyComplete

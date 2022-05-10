@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.1.3" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebLibBL\WebLibBLL.csproj" />
+    <ProjectReference Include="..\WebLibCommon\WebLibCommon.csproj" />
+  </ItemGroup>
+
 </Project>

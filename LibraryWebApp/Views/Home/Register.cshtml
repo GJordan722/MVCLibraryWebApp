@@ -1,0 +1,57 @@
+﻿@using LibraryWebApp.Models;
+@using System.Web;
+@using Microsoft.AspNetCore.Mvc;
+@model UserModel;
+
+@{
+    ViewData["Title"] = "Sign Up!";
+}
+
+
+<div>
+    @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+    {
+        <div class="row pt-3">
+            <div class="col-sm-5">
+                <div class="card ">
+                    <div class="card-header">
+                        <h4><strong>Register</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                @Html.LabelFor(m=>m.Email)
+                                @Html.TextBoxFor(m=>m.Email, new {@placeholder="Enter Email", @class="form-control"})
+                            </div>
+                            <div class="col-sm">
+                                @Html.LabelFor(m => m.FirstName)
+                                @Html.TextBoxFor(m=>m.FirstName,new {@Placeholder = "Enter First Name",@class="form-control"})
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                @Html.LabelFor(m => m.Username)
+                                @Html.TextBoxFor(m=>m.Username,new {@Placeholder = "Enter Username",@class="form-control"})
+                            </div>
+                            <div class="col-sm">
+                                @Html.LabelFor(m => m.LastName)
+                                @Html.TextBoxFor(m=>m.LastName,new {@Placeholder = "Enter Last Name",@class="form-control"})
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(m => m.Password)
+                                @Html.TextBoxFor(m=>m.Password,new {@Placeholder = "Enter Password",@class="form-control",@type="password"})
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+         <button>Submit</button>
+    }
+  
+</div>
