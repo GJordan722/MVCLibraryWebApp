@@ -164,11 +164,9 @@ namespace LibraryWebApp
         }
 
         //FIX ACTIVE
-        public void CheckIO(int media_id, string type)
+        public void CheckIO(int media_id, string type,int accountID)
         {
-            // int accountID = int.Parse(DB.Active[3]);
-            int accountID = 1;
-            if (DB.updateMedia(media_id, type, accountID) == 1)
+            if (DB.checkIO(media_id, type, accountID) == 1)
             {
                 Console.WriteLine($"Checked out.");
             }
@@ -177,9 +175,24 @@ namespace LibraryWebApp
                 Console.WriteLine($"Checked in.");
             }
         }
+
+        public bool UpdateMedia(Media media, Media update)
+        {
+            int? result = DB.UpdateMedia(media, update.Media_ID, update.Media_Name, update.Media_Type, update.Author, update.Publisher);
+
+            if (result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void ChangeRole(string username, string password, int roleid)
         {
-            DataTable? dt = DB.CheckLogin(username, password);
+            DataTable? dt = DB.retrieveUser(username, password);
             int id = -1;
             foreach (DataRow dr in dt.Rows)
             {
@@ -200,11 +213,9 @@ namespace LibraryWebApp
         {
             if (DB.deleteUser(id, username, password))
             {
-                Console.WriteLine($"{username} has been deleted!");
             }
             else
             {
-                Console.WriteLine($"{username} not found");
             }
         }
 
@@ -243,19 +254,7 @@ namespace LibraryWebApp
             }
         }
 
-        //FIX ACTIVE
-        public bool CheckLoggedin()
-        {
-            if (false)
-            {
-                return true;
-            }
-            else
-            {
-                Console.WriteLine($"Already logged in as ");
-                return false;
-            }
-        }
+  
         public string GetHiddenConsoleInput()
         {
             StringBuilder input = new StringBuilder();
@@ -273,12 +272,10 @@ namespace LibraryWebApp
         public User? Login(string UserName = "", string Password = "")
         {
             User user = new User();
-            if (UserName == "" && Password == "")
-            {
-                Console.WriteLine("Logged in as guest");
+            if(UserName == null || Password == null){
                 return null;
             }
-            DataTable dt = DB.CheckLogin(UserName, Password);
+            DataTable? dt = DB.retrieveUser(UserName, Password);
             if (dt != null)
             {
                 foreach (DataRow row in dt.Rows)
@@ -299,7 +296,6 @@ namespace LibraryWebApp
                 }
                 else
                 {
-                    Console.WriteLine("Username or password invalid.");
                     return null;
                 }
             }
@@ -309,60 +305,62 @@ namespace LibraryWebApp
             }
         }
 
-        public int Register(User user)
+        internal int? checkNull(object x)
         {
-            int role_id = 3;
-            Random rand = new Random();
-            int id = rand.Next();
-            DB.userCreate(id, user.Username, user.Password, role_id, user.Email, user.FirstName, user.LastName);
-            return id;
-        }
-        
-        //FIX ACTIVE
-    /*    public string[]? Logout()
-        {
-            if (DB.Active == null)
+            if(x.ToString() == "")
             {
-                Console.WriteLine("No one currently logged in.");
+                return null;
+            }
+            return int.Parse(x.ToString());
+        }
+
+        public Search Search(Media Media)
+        {
+            LibraryDB db = new LibraryDB();
+            DataTable dt = db.searchMedia(Media.Media_ID, Media.Media_Name, Media.Media_Type, Media.Account_ID, Media.Author, Media.Publisher);
+            Search search = new Search();
+            search.MediaList = new List<Media>();
+            Media mediaTemp = new Media();
+            if(dt != null)
+            {
+             
+                foreach (DataRow row in dt.Rows)
+                {
+                    search.MediaList.Add(new Media {Media_ID = int.Parse(row[0].ToString()),
+                                                    Media_Name = row[1].ToString(),
+                                                    Media_Type = row[2].ToString(),
+                                                    Account_ID = checkNull(row[3]),
+                                                    Author = row[4].ToString(),
+                                                    Publisher = row[5].ToString()});
+                }
+                return search;
+            }
+            return null;
+        }
+
+        public bool Register(User user)
+        {
+            if(DB.userCreate(user.Account_ID, user.Username, user.Password, user.Role_ID, user.Email, user.FirstName, user.LastName) != null)
+            {
+                return true;
             }
             else
             {
-                Console.WriteLine($"Goodbye {DB.Active[0]}");
-                DB.Active = null;
+                return false;
             }
-            return DB.Active;
-        }*/
-
-        public void TestCheck(string username, string password)
-{
-
-}
-public string[] testRegister(string user, string password, string role)
-{
-    if (DB.Profiles.ContainsKey(user))
-    {
-        return new string[] { "", "", "" };
-    }
-    if (role.ToUpper() == "P" || role.ToUpper() == "L" || role.ToUpper() == "A")
-    {
-        switch (role.ToUpper())
-        {
-            case "P":
-                role = "Patron";
-                break;
-            case "L":
-                role = "Librarian";
-                break;
-            case "A":
-                role = "Admin";
-                break;
         }
-        return new string[] { user, password, role };
-    }
-    else
-    {
-        return new string[] { user, password, "" };
-    }
-}
+        
+        public bool DeleteMedia(Media model)
+        {
+            int wasDeleted = DB.deleteMedia(model);
+            if(wasDeleted == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

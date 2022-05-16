@@ -10,3 +10,15 @@ C:\Users\carbo\source\repos\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCo
 C:\Users\carbo\source\repos\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\refint\WebLibCommon.dll
 C:\Users\carbo\source\repos\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.pdb
 C:\Users\carbo\source\repos\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\ref\WebLibCommon.dll
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\bin\Debug\net6.0\WebLibCommon.deps.json
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\bin\Debug\net6.0\WebLibCommon.dll
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\bin\Debug\net6.0\WebLibCommon.pdb
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.csproj.AssemblyReference.cache
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.AssemblyInfoInputs.cache
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.AssemblyInfo.cs
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.csproj.CoreCompileInputs.cache
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.dll
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\refint\WebLibCommon.dll
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\WebLibCommon.pdb
+C:\Users\carbo\source\repos\C#\LibraryWebApp\WebLibCommon\obj\Debug\net6.0\ref\WebLibCommon.dll

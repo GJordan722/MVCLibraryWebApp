@@ -368,4 +368,7 @@
       <Link>wwwroot\js\bootstrap.min.js.map</Link>
     </Content>
   </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgNewtonsoft_Json Condition=" '$(PkgNewtonsoft_Json)' == '' ">C:\Program Files\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\9.0.1</PkgNewtonsoft_Json>
+  </PropertyGroup>
 </Project>
