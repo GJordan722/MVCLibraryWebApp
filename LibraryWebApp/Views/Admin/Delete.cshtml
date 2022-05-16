@@ -1,0 +1,22 @@
+﻿@using LibraryWebApp.Models
+@model MediaModel
+@{
+    ViewData["Title"] = $"Delete {Model.Media_Name}?";
+}
+
+
+<div class="card" style="margin-top: 4rem;">
+    <div class="card-header text-center">
+        <h1><strong>ARE YOU SURE YOU WANT TO DELETE THIS MEDIA</strong></h1>
+    </div>
+    <div class="card-body row">
+        <div class="col-sm-2"></div>
+        @Html.ActionLink("YES","DeleteMedia","Admin",Model,new {@class="btn btn-success col-sm-4"})
+        @Html.ActionLink("NO", "Browse","Search",null, new {@class ="btn btn-danger col-sm-4"})
+        <div class="col-sm-2"></div>
+    </div>
+    <div class="card-footer">
+
+    </div>
+</div>
+

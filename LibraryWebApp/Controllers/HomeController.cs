@@ -13,45 +13,57 @@ namespace LibraryWebApp.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public IActionResult Index(UserModel user)
+        public IActionResult Index()
         {
+                return View();
+        }
+
+        [HttpGet]
+        public IActionResult Dashboard()
+        github
+            {
+            User user = SessionHelper.GetObjectFromJson<User>(HttpContext.Session, "Profile");
+            if(user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            Mapper mapper = new Mapper();
+            UserModel model = mapper.UserFillUserModel(user);
             if (ModelState.IsValid)
             {
-                return View(user);
+                return View(model);
             }
             else
             {
-                return View(new UserModel() { FirstName =""});
+                return View();
             }
-            
         }
+
         public IActionResult Privacy()
         {
             return View();
         }
-
+        public IActionResult LogOut()
+        {
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "Profile", null);
+            return RedirectToAction("Index","Home");
+        }
         [HttpGet]
         public IActionResult Login()
         {
-           
+
             return View();
         }
         [HttpPost]
         public IActionResult Login(UserModel user)
         {
             LibraryBLL LBLL = new LibraryBLL();
+            Mapper mapper = new Mapper();
             User transfer = LBLL.Login(user.Username, user.Password);
-            int result = transfer.Role_ID;
-            if(result == 1 || result == 2 || result == 3)
+            if(transfer != null)
             {
-                user.Email = transfer.Email;
-                user.Username = transfer.Username;
-                user.Password = transfer.Password;
-                user.Account_ID = transfer.Account_ID;
-                user.Role_ID = transfer.Role_ID;
-                user.FirstName = transfer.FirstName;
-                user.LastName = transfer.LastName;
-                return RedirectToAction("Index", "Home",user);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "Profile", transfer);
+                return RedirectToAction("Dashboard", "Home");
             }
             else
             {
@@ -69,18 +81,15 @@ namespace LibraryWebApp.Controllers
         public IActionResult Register(UserModel user)
         {
             LibraryBLL LBLL = new LibraryBLL();
-            User transfer = new User();
-            transfer.Email      =user.Email;     
-            transfer.Username   =user.Username;
-            transfer.Password   =user.Password;
-            transfer.Account_ID = LBLL.Register(transfer);
-            transfer.Role_ID    =user.Role_ID;
-            transfer.FirstName  =user.FirstName;
-            transfer.LastName   =user.LastName;
-           
-            if(transfer.Account_ID != 0)
+            Random rand = new Random();
+            Mapper mapper = new Mapper();
+            user.Account_ID = rand.Next();
+            user.Role_ID = 3;
+            User transfer = mapper.UserModelFillUser(user);
+            if (LBLL.Register(transfer))
             {
-                return RedirectToAction("Index", "Home",user);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "Profile", transfer);
+                return RedirectToAction("Dashboard", "Home");
             }
             else
             {

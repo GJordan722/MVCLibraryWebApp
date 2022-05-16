@@ -1,0 +1,41 @@
+﻿@model UserModel
+@{
+
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1>Welcome Back @Model.FirstName !</h1>
+    @switch (Model.Role_ID)
+    {
+        case 1:
+            <div class="row p-5">
+                <div class="col-sm-4">
+                    <form asp-controller="Admin" asp-action="Profile" method="post">
+                        <button asp-controller="Admin" asp-action="Profile" formmethod="get" class="btn btn-primary btn-outline-light">
+                            Edit User
+                        </button>
+                    </form>
+                </div>
+                <div class="col-sm-4">
+                    <form asp-controller="Admin" asp-action="MediaControl" method="get">
+                        <button class="btn btn-primary btn-outline-light" type="submit">
+                            Edit Media
+                        </button>
+                    </form>
+                </div>
+                <div class="col-sm-4">
+                    <button asp-controller="Admin" asp-action="Checked" formmethod="post" class="btn btn-primary btn-outline-light">
+                        View Checked Out
+                    </button>
+                </div>
+            </div>
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+
+    }
+
+</div>
