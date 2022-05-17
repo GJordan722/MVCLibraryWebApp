@@ -1,0 +1,48 @@
+﻿@model MediaModel
+@{
+
+    ViewData["Title"] = "Media - Admin";
+}
+
+<div class="card">
+    <div class="card-header row fw-bold mx-0">
+        <div class="col-sm-4"></div>
+        <h1 class="col-sm-7">MEDIA CONTROL</h1>
+        <div class="col-sm-1">
+            @Html.ActionLink("Back","Browse","Search",null,new{@class="btn btn-primary"})
+        </div>
+    </div>
+       @using (Html.BeginForm("EditMedia", "Admin",(MediaModel)Model,FormMethod.Post))
+            {
+    <div class="card-body p-5">
+          
+            @Html.LabelFor(m=>m.Media_ID,"ID")
+            @Html.TextBoxFor(m=>m.Media_ID,new {@class ="form-control", @Value=" ",@placeholder="ID" })
+
+            @Html.LabelFor(m=>m.Media_Name,"Title")
+            @Html.TextBoxFor(m=>m.Media_Name,new {@class =" form-control", @Value=" ",@placeholder="Title" })
+
+            @Html.LabelFor(m=>m.Media_Type,"Medium")
+            @Html.TextBoxFor(m=>m.Media_Type,new {@class ="form-control", @Value=" ",@placeholder="Medium" })
+
+            @Html.LabelFor(m=>m.Author)
+            @Html.TextBoxFor(m=>m.Author,new {@class ="form-control", @Value=" ",@placeholder="Author" })
+
+            @Html.LabelFor(m=>m.Publisher)
+            @Html.TextBoxFor(m=>m.Publisher,new {@class ="form-control", @Value=" ",@placeholder="Publisher" })
+           
+    </div>
+    <div class="card-footer row mx-0">
+         <div class="col-sm-3">
+        </div>
+
+        <div class="col-sm-6">
+                <button class="btn btn-secondary w-100" formmethod="post" type="submit">Change</button>
+        
+        </div>
+         <div class="col-sm-3">
+        </div>
+    </div>
+    }
+
+</div>

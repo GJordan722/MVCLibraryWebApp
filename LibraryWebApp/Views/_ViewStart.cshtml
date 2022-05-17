@@ -1,0 +1,16 @@
+﻿@using LibraryWebApp
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Mvc
+
+@{
+    User _user = SessionHelper.GetObjectFromJson<User>(Context.Session, "Profile");
+    if ((_user != null) && ((_user.Role_ID == 1) ||(_user.Role_ID == 2) ||(_user.Role_ID == 3)))
+    {
+        Layout = "_LayoutLI";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+    
+}

@@ -1,0 +1,58 @@
+﻿@model SearchModel
+@using System.Text;
+@using Microsoft.AspNetCore.Mvc;
+
+@{
+    ViewData["Title"] = "View CheckIO - Admin";
+
+}
+
+@if (Model.checkiolist.Count > 0)
+{
+    <div class="d-inline-block">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Media ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Account ID</th>
+                    <th scope="col">User</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    @if (Model.access != null)
+                    {
+                        @if (Model.access == 1 || Model.access == 2)
+                        {
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        }
+                        <th scope="col"></th>
+                    }
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CheckIOModel mm in Model.checkiolist)
+                {
+                    <tr scope="row">
+                        <td>@mm.MediaID</td>
+                        <td>@mm.MediaName</td>
+                        <td>@mm.AccountID</td>
+                        <td>@mm.Username</td>
+                        <td>@mm.FirstName</td>
+                        <td>@mm.LastName</td>
+                        @if (Model.access == 1 || Model.access == 2)
+                        {
+                            <td>@Html.ActionLink("????","checkIO","Patron",null,new {@class="btn btn-primary"})</td>
+                        }
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Results found</p>
+}

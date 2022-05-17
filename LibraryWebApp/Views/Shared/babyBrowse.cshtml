@@ -1,0 +1,36 @@
+﻿@model SearchModel
+@using System.Text;
+
+
+@if (Model.MediaList.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Media ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Medium</th>
+                <th scope="col">Author</th>
+                <th scope="col">Publisher</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MediaModel mm in Model.MediaList)
+            {
+                <tr scope="row">
+                    <td>@mm.Media_ID</td>
+                    <td>@mm.Media_Name</td>
+                    <td>@mm.Media_Type</td>
+                    <td>@mm.Author</td>
+                    <td>@mm.Publisher</td>
+                </tr>
+            }
+
+        </tbody
+    </table>
+
+}
+else
+{
+    <p>No Results found</p>
+}

@@ -1,0 +1,15 @@
+TODO
+	Update LibraryDB
+		Add exception table
+		add one more table(???)
+		Add more columns to user table
+			Email
+			Name(First&Last)
+		**LATER** Make script to fill media table
+	Refactor BLL for website
+		get rid of all the console.writeline(honestly only have to do that for the login)
+	Create a class to map model to common class (or maybe not now idk yet as long as I can move and use the data im straight)
+	Make the ui for the site
+		Set up basic Index page
+			Probably greet the user and if no one is signed in just a basic welcome maybe with the date or something
+				Theres no way im making the index from the mockup rn so hoenstly may leave the Index be pretty blank until user logs in
