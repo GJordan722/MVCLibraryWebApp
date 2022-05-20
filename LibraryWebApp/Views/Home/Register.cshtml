@@ -23,6 +23,10 @@
                                 @Html.LabelFor(m=>m.Email)
                                 @Html.TextBoxFor(m=>m.Email, new {@placeholder="Enter Email", @class="form-control"})
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                @if (TempData["EMessage"] != null)
+                                {
+                                    <p class="text-danger">@TempData["EMessage"]</p>
+                                }
                             </div>
                             <div class="col-sm">
                                 @Html.LabelFor(m => m.FirstName)
@@ -47,6 +51,14 @@
                                 @Html.LabelFor(m => m.Password)
                                 @Html.TextBoxFor(m=>m.Password,new {@Placeholder = "Enter Password",@class="form-control",@type="password"})
                                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                @if (TempData["PMessage"] != null)
+                                {
+                                    <p class="text-danger">@TempData["PMessage"]</p>
+                                }
+                            </div>
+                            <div class="col-sm-6 mt-4">
+                                @Html.CheckBox("Hidden",false)
+                                @Html.Label("Hidden","Show Password")
                             </div>
                         </div>
 
@@ -56,7 +68,7 @@
                 </div>
             </div>
         </div>
-         <button>Submit</button>
+        <button>Submit</button>
     }
-  
+
 </div>

@@ -13,8 +13,20 @@ namespace LibraryWebApp.Controllers
             LibraryBLL LBLL = new LibraryBLL();
             Search searchList = LBLL.Search(search);
             SearchModel Browse = mapper.FillOutMediaList(searchList);
-            User user = SessionHelper.GetObjectFromJson<User>(HttpContext.Session, "Profile");
-            if(user == null)
+            User? user = SessionHelper.GetObjectFromJson<User>(HttpContext.Session, "Profile");
+            if(user != null)
+            {
+                UserModel _user = mapper.UserFillUserModel(user);
+                Browse.User = _user;
+            }
+            List<HoldIO> mediaList = LBLL.ViewHoldIO();
+            List<HoldIOModel> modelList = new List<HoldIOModel>();
+            foreach (HoldIO m in mediaList)
+            {
+                modelList.Add(mapper.HoldIOFillHoldIOMedia(m));
+            }
+            Browse.holdiolist = modelList;
+            if (user == null)
             {
                 return View(Browse);
             }

@@ -3,12 +3,20 @@
 @using Microsoft.AspNetCore.Mvc;
 
 @{
-    ViewData["Title"] = "View CheckIO - Admin";
+    ViewData["Title"] = "View CheckIO - Patron";
 
 }
 
 @if (Model.MediaList.Count > 0)
 {
+    <div class="row">
+        <div class="col-sm-5">
+        </div>
+        <div class="col-sm-5"></div>
+        <div class="col-sm-2">
+            @Html.ActionLink("Back","Dashboard","Home", null,new{@class="btn btn-success"})
+        </div>
+    </div>
     <div class="d-inline-block">
         <table class="table">
             <thead>
@@ -18,15 +26,6 @@
                     <th scope="col">Medium</th>
                     <th scope="col">Author</th>
                     <th scope="col">Publisher</th>
-                    @if (Model.access != null)
-                    {
-                        @if (Model.access == 1 || Model.access == 2)
-                        {
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        }
-                        <th scope="col"></th>
-                    }
 
                 </tr>
             </thead>
@@ -39,10 +38,6 @@
                         <td>@mm.Media_Type</td>
                         <td>@mm.Author</td>
                         <td>@mm.Publisher</td>
-                        @if (Model.access == 1 || Model.access == 2)
-                        {
-                            <td>@Html.ActionLink("????","checkIO","Patron",null,new {@class="btn btn-primary"})</td>
-                        }
                     </tr>
                 }
 
@@ -53,4 +48,5 @@
 else
 {
     <p>No Results found</p>
+    @Html.ActionLink("Back","Dashboard","Home", null,new{@class="btn btn-success"})
 }

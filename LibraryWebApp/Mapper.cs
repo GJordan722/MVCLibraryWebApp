@@ -91,5 +91,15 @@ namespace LibraryWebApp
             CheckIOM.LastName = checkio.LastName;
             return CheckIOM;
         }
+        public HoldIOModel HoldIOFillHoldIOMedia(HoldIO hold)
+        {
+            HoldIOModel HoldIOM = new HoldIOModel();
+            HoldIOM.MediaID = hold.MediaID;
+            HoldIOM.MediaName = hold.MediaName;
+            HoldIOM.AccountID = hold.AccountID;
+            HoldIOM.Username = hold.Username;
+            HoldIOM.Email = hold.Email;
+            return HoldIOM;
+        }
     }
 }

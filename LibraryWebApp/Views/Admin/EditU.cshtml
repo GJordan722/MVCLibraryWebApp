@@ -1,0 +1,51 @@
+﻿@model UserModel
+@{
+
+    ViewData["Title"] = "EditUser - Admin";
+}
+
+<div class="card">
+    <div class="card-header row fw-bold mx-0">
+        <div class="col-sm-4"></div>
+        <h1 class="col-sm-7">EDIT USER</h1>
+        <div class="col-sm-1">
+            @Html.ActionLink("Back","Dashboard","Home",null,new{@class="btn btn-primary"})
+        </div>
+    </div>
+       @using (Html.BeginForm("EditUser", "Admin",(UserModel)Model,FormMethod.Post))
+            {
+    <div class="card-body p-5">
+          
+            @Html.LabelFor(m=>m.Username,"Username")
+            @Html.TextBoxFor(m=>m.Username,new {@class ="form-control", @Value=" ",@placeholder="Username" })
+
+            @Html.LabelFor(m=>m.Password,"Password")
+            @Html.TextBoxFor(m=>m.Password,new {@class =" form-control", @Value=" ",@placeholder="Password" ,@type="password"})
+
+            @Html.LabelFor(m=>m.Email,"Email")
+            @Html.TextBoxFor(m=>m.Email,new {@class ="form-control", @Value=" ",@placeholder="Email" })
+
+            @Html.LabelFor(m=>m.Role_ID)
+            @Html.TextBoxFor(m=>m.Role_ID,new {@class ="form-control", @Value=" ",@placeholder="Role ID" })
+
+            @Html.LabelFor(m=>m.FirstName,"First Name")
+            @Html.TextBoxFor(m=>m.FirstName,new {@class ="form-control", @Value=" ",@placeholder="First Name" })
+
+             @Html.LabelFor(m=>m.LastName, "Last Name")
+            @Html.TextBoxFor(m=>m.LastName,new {@class ="form-control", @Value=" ",@placeholder="Last Name" })
+           
+    </div>
+    <div class="card-footer row mx-0">
+         <div class="col-sm-3">
+        </div>
+
+        <div class="col-sm-6">
+                <button class="btn btn-success w-100" formmethod="post" type="submit">ADD</button>
+        
+        </div>
+         <div class="col-sm-3">
+        </div>
+    </div>
+    }
+
+</div>
