@@ -46,7 +46,35 @@
                                 <td>@Html.ActionLink("Edit","Edit","Admin", (MediaModel)mm, new {@class="btn btn-primary"})</td>
                                 <td>@Html.ActionLink("Delete","Delete","Admin", (MediaModel)mm, new{@class="btn btn-primary"})</td>
                             }
-                            <td>@Html.ActionLink("Checkout","CheckIO","Patron",(MediaModel)mm,new {@class="btn btn-primary"})</td>
+                            if (mm.Account_ID != null && mm.Account_ID != Model.User.Account_ID)
+                            {
+                                if (Model.holdiolist.Count > 0)
+                                {
+                                    foreach (HoldIOModel hiom in Model.holdiolist)
+                                    {
+                                        if (mm.Media_ID == hiom.MediaID)
+                                        {
+                                            <td>@Html.ActionLink("Checked-Out","CheckIO","Patron",(MediaModel)mm,new {@class="btn btn-primary disabled"})</td>
+                                            <td>@Html.ActionLink("Remove Hold","HoldIO","Patron",(MediaModel)mm,new {@class="btn btn-primary"})</td>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <td>@Html.ActionLink("Checked-Out","CheckIO","Patron",(MediaModel)mm,new {@class="btn btn-primary disabled"})</td>
+                                    <td>@Html.ActionLink("Place Hold","HoldIO","Patron",(MediaModel)mm,new {@class="btn btn-primary"})</td>
+                                }
+                            }
+                            else if (mm.Account_ID != null && mm.Account_ID == Model.User.Account_ID)
+                            {
+                                <td>@Html.ActionLink("Check-In","CheckIO","Patron",(MediaModel)mm,new {@class="btn btn-primary "})</td>
+
+                            }
+                            else
+                            {
+                                <td>@Html.ActionLink("Checkout","CheckIO","Patron",(MediaModel)mm,new {@class="btn btn-primary"})</td>
+                            }
+
                         }
                     </tr>
                 }

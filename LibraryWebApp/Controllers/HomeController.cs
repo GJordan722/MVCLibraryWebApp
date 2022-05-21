@@ -59,13 +59,14 @@ namespace LibraryWebApp.Controllers
             LibraryBLL LBLL = new LibraryBLL();
             Mapper mapper = new Mapper();
             User transfer = LBLL.Login(user.Username, user.Password);
-            if(transfer != null)
+            if (transfer != null)
             {
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "Profile", transfer);
                 return RedirectToAction("Dashboard", "Home");
             }
             else
             {
+                TempData["UMessage"] = "Username or password is incorrect!";
                 return View();
             }
         }
@@ -79,9 +80,24 @@ namespace LibraryWebApp.Controllers
         [HttpPost]
         public IActionResult Register(UserModel user)
         {
+            bool error = false;
             LibraryBLL LBLL = new LibraryBLL();
             Random rand = new Random();
             Mapper mapper = new Mapper();
+            if(!user.Email.Contains("@") || !user.Email.Contains(".com"))
+            {
+                TempData["EMessage"] = "Please enter a valid email.";
+                error = true;
+            }
+            if (!LBLL.PasswordValidation(user.Password))
+            {
+                TempData["PMessage"] = "Please enter a valid password.";
+                error = true;
+            }
+            if (error)
+            {
+                return View();
+            }
             user.Account_ID = rand.Next();
             user.Role_ID = 3;
             User transfer = mapper.UserModelFillUser(user);

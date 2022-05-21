@@ -27,8 +27,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdE1lZGlhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Admin/EditU.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Admin/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Admin/ViewCheckIO.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0NoZWNrSU8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Admin/ViewHoldIO.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld0hvbGRJTy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Home/Dashboard.cshtml]
@@ -53,6 +65,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Patron/ShowCheckIO.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0cm9uXFNob3dDaGVja0lPLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Patron/ShowHoldIO.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0cm9uXFNob3dIb2xkSU8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Onshore/source/repos/LibraryWebApp/LibraryWebApp/Views/Search/Browse.cshtml]

@@ -31,7 +31,7 @@
                     </button>
                 </div>
             </nav>
-            <div id="searchbar" class="col-sm-8 mb-4 border-bottom bg-white p-0 d-inline-flex flex-sm-grow-1">
+            <div id="searchbar" class="col-sm-8 mb-4 border-bottom bg-white p-0 d-inline-flex flex-sm-grow-1 flex-sm-shrink-1">
              @*   <div class="dropdown border-bottom h-100 ">
                    <a class="nav-link dropdown-toggle btn btn-secondary text-white h-100 border" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         @mainBtn
@@ -51,7 +51,7 @@
                         <button type="submit" class="btn btn-primary h-100" style="height:100%;"><span class="bi-search"></span></button>
                     </form>
             </div>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-4 col-2">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-4 col-sm-2">
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 row">
                         <li class="nav-item col-4">
@@ -81,6 +81,7 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

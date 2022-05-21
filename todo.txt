@@ -1,15 +1,33 @@
 TODO
-	Update LibraryDB
-		Add exception table
-		add one more table(???)
-		Add more columns to user table
-			Email
-			Name(First&Last)
-		**LATER** Make script to fill media table
-	Refactor BLL for website
-		get rid of all the console.writeline(honestly only have to do that for the login)
-	Create a class to map model to common class (or maybe not now idk yet as long as I can move and use the data im straight)
-	Make the ui for the site
-		Set up basic Index page
-			Probably greet the user and if no one is signed in just a basic welcome maybe with the date or something
-				Theres no way im making the index from the mockup rn so hoenstly may leave the Index be pretty blank until user logs in
+part 5 list
+	
+
+4) Patron dashboard should be be able to change their own profile information. Patron should never be able to access other's views or profiles. Security related.
+5) Administrator should be able add user, disable user, edit all user information including changing roles for a user. They should be able change all things that an individual Patron can do in their profile edit. Changing roles should be implemented are dropdown/radio buttons not a textbox. Patron and Librarian should not have access to these functions. Security related.--NOT DONE--
+6) Librarian and Administrator should have a view to see all checked out books and the username of who has it checked out and and same for books on hold.--MAKE HOLD-- 
+7) Passwords takes between 8 and 50 characters. At least one uppercase letter, 1 number and 1 special character *$#@!--NOT DONE--
+8) Username should be between 8 and 50 character which can include number, letter and .@ special characters. Emails are acceptable usernames.--NOT DONE--
+9) Duplicate usernames are not allows. If a duplicate username is attempted on register, a modal or alert styled in BootStrap should appear letting the user know that the username is already taken and to try a different username.--NOT ODNE--
+10) Passwords should be salted and hashed. Makes your application secure. Security related--NOT ODNE--.
+12) Hide/Unhide  passwords so that plain text is not visible on register or login. HINT: input type password. Clickable icon to hide and unhide password so the user can see the password they typed. User experience.--NOT ODNE--
+
+Extra
+13) Allow uploading for profile picture or use of selectable avatar for the profile functionality
+14) Add address information to the register view and use a third party API to verify to it a valid address
+15) Unit testing on as many method as possible. Super important.
+16) Book title and Username should be clickable and go to the appropriate view.
+17) Use enumeration on hard coded strings like roles. HINT: public enum RoleType { Administrator = 1 }
+18)  # 1 Search item are clickable. Clicking any given book will send user to the details view for that item.
+
+WORKPLAN
+(4,5) - User manipulation. #MEDIUM?
+(6) - Have to copy code from checkio method and change for hold. edit database to now account for holds #MEDIUM?
+(7,8) - Regex, maybe some validation in model #EASY
+(9) - probably check database for name.!!Figure out how to use alerts or modal #?LONG
+(10) - touch up on hash and salt (I know there are hash methods) #EASY
+(12)-changing input type(can do if statement)#EASY
+(15)make unit test#TEDIOUS
+(16)I want to make the results cards and clicking it takes it to a detail page #LONG!!!!!!!!!!!
+()Correctly use the catagory button#LONG?
+()Beautify Index,DashBoard#MEDIUM?
+

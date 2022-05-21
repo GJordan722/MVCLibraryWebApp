@@ -1,0 +1,45 @@
+﻿@model SearchModel
+@using System.Text;
+@using Microsoft.AspNetCore.Mvc;
+
+@{
+    ViewData["Title"] = "View HoldIO - Admin";
+
+}
+
+@if (Model.holdiolist.Count > 0)
+{
+    <div class="d-inline-block">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Media ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Account ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (HoldIOModel mm in Model.holdiolist)
+                {
+                    <tr scope="row">
+                        <td>@mm.MediaID</td>
+                        <td>@mm.MediaName</td>
+                        <td>@mm.AccountID</td>
+                        <td>@mm.Username</td>
+                        <td>@mm.Email</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Results found</p>
+     @Html.ActionLink("Back","Dashboard","Home", null,new{@class="btn btn-success"})
+}
