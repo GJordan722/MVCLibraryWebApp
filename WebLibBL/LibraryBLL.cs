@@ -1,8 +1,10 @@
 ﻿using System.Data;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 
 namespace LibraryWebApp
 {
@@ -74,7 +76,7 @@ namespace LibraryWebApp
                 Console.WriteLine();
             }
         }
-        public void PrintUsers()
+      /*  public void PrintUsers()
         {
             DataTable data = DB.viewUsers();
             Console.WriteLine();
@@ -102,8 +104,13 @@ namespace LibraryWebApp
                 }
                 Console.WriteLine();
             }
-        }
+        }*/
 
+        public List<User> GetUsers()
+        {
+            List<User>? userList = DB.viewUsers();
+            return userList;
+        }
         public void PrintRoles()
         {
             DataTable data = DB.viewRoles();
@@ -135,7 +142,7 @@ namespace LibraryWebApp
 
         }
 
-        public bool SearchProfile(string UserName)
+/*        public bool SearchProfile(string UserName)
         {
             DataTable dt = DB.viewUsers();
             bool found = false;
@@ -161,7 +168,7 @@ namespace LibraryWebApp
 
             }
             return found;
-        }
+        }*/
         public bool CheckIO(Media media, User user)
         {
             int result = DB.checkIO(media.Media_ID, media.Media_Type, user.Account_ID);
@@ -175,6 +182,42 @@ namespace LibraryWebApp
             }
         }
 
+        public bool HoldIO(Media media, User user)
+        {
+            int result = DB.HoldIO(media.Media_ID, user.Account_ID);
+            if (result == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool updateUser(User user, User olduser)
+        {
+            int result = 0;
+            if(user.Password != null)
+            {
+                byte[] salty = Salt(user.Password);
+                string salt = Convert.ToBase64String(salty);
+                string hash = Hash(user.Password, salty);
+                result = DB.updateUser((int)olduser.Account_ID, user.Username, hash, user.Role_ID, user.Email, user.FirstName, user.LastName, salt);
+            }
+            else
+            {
+                result = DB.updateUser((int)olduser.Account_ID, user.Username, user.Password, user.Role_ID, user.Email, user.FirstName, user.LastName, null);
+            }
+            if(result == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public List<Media>? patronViewCheckIO(User user)
         {
             DataTable? dt = DB.patronViewCheckIO(user.Account_ID);
@@ -194,6 +237,29 @@ namespace LibraryWebApp
                         Publisher = row[5].ToString()
                     });
                   }
+                return mediaList;
+            }
+            return null;
+        }
+
+        public List<HoldIO>? patronViewHoldIO(User user)
+        {
+            DataTable? dt = DB.patronViewHoldIO(user.Account_ID);
+            List<HoldIO> mediaList = new List<HoldIO>();
+            if (dt != null)
+            {
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    mediaList.Add(new HoldIO
+                    {
+                        MediaID = int.Parse(row[0].ToString()),
+                        MediaName = row[1].ToString(),
+                        AccountID = int.Parse(row[2].ToString()),
+                        Username = row[3].ToString(),
+                        Email = row[4].ToString(),
+                    });
+                }
                 return mediaList;
             }
             return null;
@@ -223,6 +289,29 @@ namespace LibraryWebApp
             return null;
         }
 
+        public List<HoldIO>? ViewHoldIO()
+        {
+            DataTable? dt = DB.adminViewHoldIO();
+            List<HoldIO> mediaList = new List<HoldIO>();
+            if (dt != null)
+            {
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    mediaList.Add(new HoldIO
+                    {
+                        MediaID = int.Parse(row[0].ToString()),
+                        MediaName = row[1].ToString(),
+                        AccountID = int.Parse(row[2].ToString()),
+                        Username = row[3].ToString(),
+                        Email = row[4].ToString(),
+                    });
+                }
+                return mediaList;
+            }
+            return null;
+        }
+
         public bool UpdateMedia(Media media, Media update)
         {
             int? result = DB.UpdateMedia(media, update.Media_ID, update.Media_Name, update.Media_Type, update.Author, update.Publisher);
@@ -237,24 +326,7 @@ namespace LibraryWebApp
             }
         }
 
-        public void ChangeRole(string username, string password, int roleid)
-        {
-            DataTable? dt = DB.retrieveUser(username, password);
-            int id = -1;
-            foreach (DataRow dr in dt.Rows)
-            {
-                id = int.Parse(dr[0].ToString());
-            }
-            if (dt != null)
-            {
-                Console.WriteLine("Role Changed");
-                int role_id = DB.updateUser(id, username, roleid);
-            }
-            else
-            {
-                Console.WriteLine($"{username} not found");
-            }
-        }
+
 
         public void UserDelete(int id, string username, string password)
         {
@@ -265,7 +337,7 @@ namespace LibraryWebApp
             {
             }
         }
-
+/*
         public void PrintProfile(string UserName)
         {
             DataTable dt = DB.viewUsers();
@@ -300,14 +372,63 @@ namespace LibraryWebApp
                 Console.WriteLine($"{UserName} was not found");
             }
         }
-
-        public User? Login(string UserName = "", string Password = "")
+*/
+        public bool PasswordValidation(string password)
         {
+            bool valid = false;
+            string[] req = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+            string[] reqSpeacial = {"!", "@", "#", "$", "%", "^", "&", "*", "?" };
+            
+            foreach(string x in req)
+            {
+                if (password.Contains(x))
+                {
+                    valid = true;
+                }
+            }
+            if (!valid)
+            {
+                return valid;
+            }
+            valid = false;
+            foreach(string x in reqSpeacial)
+            {
+                if (password.Contains(x))
+                {
+                    valid = true;
+                }
+            }
+            if (!valid)
+            {
+                return valid;
+            }
+            if (!password.Any(char.IsUpper))
+            {
+                return false;
+            }
+
+            return valid;
+        }
+
+        public User? Login(string? UserName = null, string? Password = null)
+        {
+            DataTable? dt = null;
+            bool email = false;
             User user = new User();
             if(UserName == null || Password == null){
                 return null;
             }
-            DataTable? dt = DB.retrieveUser(UserName, Password);
+            Password = Hash(Password, Convert.FromBase64String(DB.passSalt(UserName)));
+            if (UserName.Contains("@"))
+            {
+                dt = DB.retrieveUser(null, Password, UserName);
+                email = true;
+            }
+            else
+            {
+                dt = DB.retrieveUser(UserName, Password, null);
+            }
+           
             if (dt != null)
             {
                 foreach (DataRow row in dt.Rows)
@@ -319,6 +440,12 @@ namespace LibraryWebApp
                     user.Email = row[5].ToString();
                     user.FirstName = row[6].ToString();
                     user.LastName = row[7].ToString();
+                }
+                if (email)
+                {
+                    DB.SetActive(user.Account_ID);
+                    user.Active = true;
+                    return user;
                 }
                 if (user.Username == UserName && user.Password == Password)
                 {
@@ -344,6 +471,20 @@ namespace LibraryWebApp
                 return null;
             }
             return int.Parse(x.ToString());
+        }
+        internal byte[] Salt(string password)
+        {
+            byte[] salt = new byte[128 / 8];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetNonZeroBytes(salt);
+            }
+            return salt;
+        }
+        internal string Hash(string password, byte[] salt)
+        {
+            string hash = Convert.ToBase64String(KeyDerivation.Pbkdf2(password, salt, KeyDerivationPrf.HMACSHA256, 100000, 256 / 8));
+            return hash;
         }
 
         public bool addMedia(Media media)
@@ -388,7 +529,9 @@ namespace LibraryWebApp
 
         public bool Register(User user)
         {
-            if(DB.userCreate(user.Account_ID, user.Username, user.Password, user.Role_ID, user.Email, user.FirstName, user.LastName) != null)
+            byte[] passwordSalt = Salt(user.Password);
+            string passwordHash = Hash(user.Password, passwordSalt);
+            if(DB.userCreate(user.Account_ID, user.Username, passwordHash, user.Role_ID, user.Email, user.FirstName, user.LastName,passwordSalt) != null)
             {
                 return true;
             }

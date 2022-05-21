@@ -322,6 +322,8 @@ C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\Syste
 C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
 C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
 C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\System.Web.WebPages.dll
+C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Onshore\source\repos\LibraryWebApp\LibraryWebApp\bin\Debug\net6.0\Microsoft.Build.Locator.dll

@@ -49,15 +49,43 @@ namespace LibraryWebApp
 
         }
 
-        public DataTable retrieveUser(string UserName, string Password)
+        public string passSalt(string username)
+        {
+            string result = "";
+            using(SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+                using(SqlCommand cmd = new SqlCommand($"Select * From Users U FULL JOIN UserDetails UD ON U.account_id = UD.account_id WHERE U.username = N'{username}' OR UD.email = N'{username}'",con))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        result = dr.GetString(8);
+                    }
+                }
+                con.Close();
+            }
+            return result;
+        }
+
+        public DataTable retrieveUser(string? UserName, string? Password, string? Email)
         {
             DataTable results = new DataTable();
+            string param = $"";
+            if (UserName == null && Email != null)
+            {
+                param = $"null,N'{Password}',N'{Email}'";
+            }
+            else if (Email == null && UserName != null)
+            {
+                param = $"N'{UserName}',N'{Password}',null";
+            }
             using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[checkUserValid] {UserName},{Password}", con))
+                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[checkUserValid] {param}", con))
                     {
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         da.Fill(results);
@@ -79,15 +107,37 @@ namespace LibraryWebApp
             return results;
         }
 
-        public int updateUser(int account_id, string username, int role_id)
+        public int updateUser(int account_id, string? new_username = null, string? new_password = null, int? new_roleID = null, string? new_email = null,string? new_firstname = null,string? new_lastname = null,string? new_salt = null)
         {
             using (SqlConnection con = new SqlConnection(connection))
             {
+                if(new_username != null)
+                {
+                    new_username = $"N'{new_username}'";
+                }
+                if (new_password != null)
+                {
+                    new_password = $"N'{new_password}'";
+                    new_salt = $"N'{new_salt}'";
+                }
+                if (new_email != null)
+                {
+                    new_email = $"N'{new_email}'";
+                }
+                if (new_firstname != null)
+                {
+                    new_firstname = $"N'{new_firstname}'";
+                }
+                if (new_lastname != null)
+                {
+                    new_lastname = $"N'{new_lastname}'";
+                }
+
                 int newRole_id = -1;
                 con.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[updateUser] {account_id},{username},{role_id}", con))
+                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[updateUser] {account_id},{new_username},{new_password},{new_roleID},{new_email},{new_firstname},{new_lastname},{new_salt}", con))
                     {
                         SqlDataReader dr = cmd.ExecuteReader();
                         while (dr.Read())
@@ -224,6 +274,38 @@ namespace LibraryWebApp
             return result;
         }
 
+        public int HoldIO(int? media_id, int? account_id)
+        {
+            int result = 0;
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[MediaHold] {media_id},{account_id}", con))
+                    {
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            result = dr.GetInt32(0);
+                        }
+                        dr.Close();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    int errorID = ex.ErrorCode;
+                    string? stack = ex.StackTrace;
+                    string message = ex.Message;
+                    string source = ex.Source;
+                    DateTime date = DateTime.Now;
+                    ExceptionLog(errorID, stack, message, source, date);
+                }
+                con.Close();
+            }
+            return result;
+        }
+
         public int? UpdateMedia(Media media, int? media_id, string? media_name, string? media_type, string? author, string? publisher)
         {
             int result = -1;
@@ -291,18 +373,18 @@ namespace LibraryWebApp
             return result;
         }
 
-        public int addMedia(int media_id, string media_name, string media_type, string author, string publisher,int? account_id = null)
+        public int addMedia(int media_id, string media_name, string media_type, string author, string publisher, int? account_id = null)
         {
             string command = $"INSERT INTO Media (media_id,media_name,media_type,author,publisher)";
             string values = $"VALUES ({media_id},N'{media_name}',N'{media_type}',N'{author}',N'{publisher}')";
             DataTable dt = new DataTable();
             int result = -1;
-            using(SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
                 try
                 {
-                    using(SqlCommand cmd = new SqlCommand($"{command}\n{values} SELECT N'#RecordsAffected' = @@ROWCOUNT", con))
+                    using (SqlCommand cmd = new SqlCommand($"{command}\n{values} SELECT N'#RecordsAffected' = @@ROWCOUNT", con))
                     {
                         SqlDataReader dr = cmd.ExecuteReader();
                         while (dr.Read())
@@ -331,12 +413,44 @@ namespace LibraryWebApp
         public DataTable? patronViewCheckIO(int? accountID)
         {
             DataTable dt = new DataTable();
-            using(SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
                 try
                 {
-                    using(SqlCommand cmd = new SqlCommand($"SELECT * FROM Media WHERE account_id = {accountID}",con))
+                    using (SqlCommand cmd = new SqlCommand($"SELECT * FROM Media WHERE account_id = {accountID}", con))
+                    {
+                        SqlDataAdapter data = new SqlDataAdapter(cmd);
+                        data.Fill(dt);
+                        data.Dispose();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    int errorID = ex.ErrorCode;
+                    string? stack = ex.StackTrace;
+                    string message = ex.Message;
+                    string source = ex.Source;
+                    DateTime date = DateTime.Now;
+                    ExceptionLog(errorID, stack, message, source, date);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+            return dt;
+        }
+
+        public DataTable? patronViewHoldIO(int? accountID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].viewHold null,{accountID}", con))
                     {
                         SqlDataAdapter data = new SqlDataAdapter(cmd);
                         data.Fill(dt);
@@ -368,7 +482,7 @@ namespace LibraryWebApp
                 con.Open();
                 try
                 {
-                    using(SqlCommand cmd = new SqlCommand($"SELECT * FROM [AdminCheckOutView]",con))
+                    using (SqlCommand cmd = new SqlCommand($"SELECT * FROM [AdminCheckOutView]", con))
                     {
                         SqlDataAdapter data = new SqlDataAdapter(cmd);
                         data.Fill(dt);
@@ -391,7 +505,37 @@ namespace LibraryWebApp
             }
             return dt;
         }
-
+        public DataTable? adminViewHoldIO()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand($"SELECT * FROM [ViewHolds]", con))
+                    {
+                        SqlDataAdapter data = new SqlDataAdapter(cmd);
+                        data.Fill(dt);
+                        data.Dispose();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    int errorID = ex.ErrorCode;
+                    string? stack = ex.StackTrace;
+                    string message = ex.Message;
+                    string source = ex.Source;
+                    DateTime date = DateTime.Now;
+                    ExceptionLog(errorID, stack, message, source, date);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+            return dt;
+        }
 
 
         public DataTable? searchMedia(int? media_id = null, string? media_name = null, string? media_type = null, int? account_id = null, string? author = null, string? publisher = null)
@@ -491,7 +635,7 @@ namespace LibraryWebApp
             return results;
         }
 
-        public int? userCreate(int? account_id, string username, string password, int? role_id, string email, string first_name, string last_name)
+        public int? userCreate(int? account_id, string username, string password, int? role_id, string email, string first_name, string last_name, byte[] salt)
         {
             if (username == null || password == null || first_name == null || last_name == null || email == null)
             {
@@ -503,7 +647,7 @@ namespace LibraryWebApp
                 con.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[userCreate] {account_id},'{username}','{password}',{role_id},'{email}','{first_name}','{last_name}'", con))
+                    using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[userCreate] {account_id},N'{username}',N'{password}',{role_id},N'{email}',N'{first_name}',N'{last_name}',N'{Convert.ToBase64String(salt)}'", con))
                     {
                         SqlDataReader dr = cmd.ExecuteReader();
                         dr.Read();
@@ -528,13 +672,13 @@ namespace LibraryWebApp
             return wow;
         }
 
-        public void ExceptionLog(int id, string stackT, string message, string source, DateTime date)
+        public void ExceptionLog(int id, string? stackT, string message, string source, DateTime date)
         {
             int result = -1;
             using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[addExceptionLog] {id},{stackT},{message},{source},{date}", con))
+                using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[addExceptionLog] {id},N'{stackT}',N'{message}',N'{source}',{date}", con))
                 {
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
@@ -546,9 +690,10 @@ namespace LibraryWebApp
             }
         }
 
-        public DataTable viewUsers()
+        public List<User> viewUsers()
         {
             DataTable results = new DataTable();
+            List<User> users = new List<User>();
             using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
@@ -556,10 +701,11 @@ namespace LibraryWebApp
                 {
                     using (SqlCommand cmd = new SqlCommand($"EXEC [dbo].[viewUsers]", con))
                     {
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        da.Fill(results);
-                        da.Dispose();
-                        return results;
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            users.Add(new User {Username = dr.GetString(0), Password = dr.GetString(1), Role_ID = dr.GetInt32(2), Account_ID = dr.GetInt32(3), Email = dr.GetString(4),FirstName = dr.GetString(5),LastName = dr.GetString(6)});
+                        }
                     }
                 }
                 catch (SqlException ex)
@@ -573,7 +719,7 @@ namespace LibraryWebApp
                 }
                 con.Close();
             }
-            return results;
+            return users;
         }
 
         public DataTable viewRoles()
